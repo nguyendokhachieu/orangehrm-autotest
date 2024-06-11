@@ -43,7 +43,7 @@ public class BaseTest {
         }
     }
 
-    @AfterTest
+    @AfterTest(alwaysRun = true)
     public void afterTest() {
         driver.quit();
     }

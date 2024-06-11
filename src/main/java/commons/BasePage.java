@@ -58,6 +58,16 @@ public class BasePage {
         return driver.getPageSource();
     }
 
+    public Set<Cookie> getCookies(WebDriver driver) {
+        return driver.manage().getCookies();
+    }
+
+    protected void addCookies(WebDriver driver, Set<Cookie> cookies) {
+        for (Cookie cookie: cookies) {
+            driver.manage().addCookie(cookie);
+        }
+    }
+
     protected void backToPage(WebDriver driver) {
         driver.navigate().back();
     }
