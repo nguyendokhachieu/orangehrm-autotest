@@ -18,4 +18,6 @@ public class CommonPageUI {
         put("Buzz", "Buzz");
     }};
     public static final String FM_XPATH_LEFT_SIDEBAR_LINK = "xpath=//span[text()='%s']//parent::a";
+    public static final String XPATH_LOADING_ICON = "xpath=//div[@class='oxd-loading-spinner']";
+    public static final String FM_XPATH_TOAST_MESSAGE = "xpath=//p[contains(@class,'oxd-text--toast-message') and text()='%s']";
 }

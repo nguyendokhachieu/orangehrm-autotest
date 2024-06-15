@@ -10,9 +10,13 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
+import pageObjects.pages.LoginPageObject;
+
+import java.time.Duration;
 
 public class BaseTest {
     protected WebDriver driver;
+    protected LoginPageObject loginPage;
 
     @BeforeSuite
     public void beforeSuite() {
@@ -24,6 +28,7 @@ public class BaseTest {
     public void beforeTest(String browserName) {
         driver = getWebDriver(browserName);
         driver.get(GlobalConstants.WEB_URL);
+        loginPage = PageGeneratorManager.getLoginPage(driver);
     }
 
     public WebDriver getDriver() {
@@ -31,20 +36,27 @@ public class BaseTest {
     }
 
     public WebDriver getWebDriver(String browserName) {
+        WebDriver driver;
         switch (browserName) {
             case "chrome":
-                return new ChromeDriver();
+                driver = new ChromeDriver();
+                break;
             case "firefox":
-                return new FirefoxDriver();
+                driver = new FirefoxDriver();
+                break;
             case "edge":
-                return new EdgeDriver();
+                driver = new EdgeDriver();
+                break;
             default:
                 throw new RuntimeException(Messages.BROWSER_NAME_IS_WRONG);
         }
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        return driver;
     }
 
     @AfterTest(alwaysRun = true)
     public void afterTest() {
-        driver.quit();
+//        driver.quit();
     }
 }

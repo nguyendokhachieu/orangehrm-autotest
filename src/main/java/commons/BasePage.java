@@ -197,7 +197,6 @@ public class BasePage {
                 JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
                 jsExecutor.executeScript("arguments[0].scrollIntoView(true);", option);
                 sleepInSeconds(1);
-
                 option.click();
                 sleepInSeconds(1);
                 break;
