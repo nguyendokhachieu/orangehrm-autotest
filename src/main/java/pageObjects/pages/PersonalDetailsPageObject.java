@@ -31,6 +31,11 @@ public class PersonalDetailsPageObject extends PIMPageObject {
         return getElementAttribute(driver, PersonalDetailsPageUI.XPATH_LASTNAME_INPUT, "value");
     }
 
+    public String getEmployeeId() {
+        waitForElementVisible(driver, PersonalDetailsPageUI.XPATH_EMPLOYEE_ID_INPUT);
+        return getElementAttribute(driver, PersonalDetailsPageUI.XPATH_EMPLOYEE_ID_INPUT, "value");
+    }
+
     public void inputToDriversLicenseNumber(String number) {
         waitForElementVisible(driver, PersonalDetailsPageUI.XPATH_DRIVERS_LICENSE_NUMBER_INPUT);
         sendKeyToElement(driver, PersonalDetailsPageUI.XPATH_DRIVERS_LICENSE_NUMBER_INPUT, number);
@@ -80,5 +85,27 @@ public class PersonalDetailsPageObject extends PIMPageObject {
     public void clickSaveButton() {
         waitForElementVisible(driver, PersonalDetailsPageUI.XPATH_SAVE_BUTTON);
         clickToElement(driver, PersonalDetailsPageUI.XPATH_SAVE_BUTTON);
+    }
+
+    public void clickAvatar() {
+        waitForElementVisible(driver, PersonalDetailsPageUI.XPATH_AVATAR_IMAGE);
+        clickToElement(driver, PersonalDetailsPageUI.XPATH_AVATAR_IMAGE);
+    }
+
+    public void waitForChangeProfilePictureTitleVisible() {
+        waitForElementVisible(driver, PersonalDetailsPageUI.XPATH_CHANGE_PROFILE_PICTURE_TITLE);
+    }
+
+    public void clickToUploadAvatar(String filePath) {
+        sleepInSeconds(1);
+        setAttributeInDOM(driver, PersonalDetailsPageUI.XPATH_AVATAR_UPLOAD_INPUT, "style", "visibility: visible;max-width:10px;width:10px;height:10px;");
+        sleepInSeconds(1);
+        sendKeyToElement(driver, PersonalDetailsPageUI.XPATH_AVATAR_UPLOAD_INPUT, filePath);
+        sleepInSeconds(1);
+    }
+
+    public boolean isAvatarUploadedBase64() {
+        waitForElementVisible(driver, PersonalDetailsPageUI.XPATH_AVATAR_IMAGE_UPLOADED_BASE64);
+        return isElementDisplayed(driver, PersonalDetailsPageUI.XPATH_AVATAR_IMAGE_UPLOADED_BASE64);
     }
 }

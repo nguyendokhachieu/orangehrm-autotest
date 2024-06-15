@@ -14,7 +14,7 @@ public class CommonPageActions extends BasePage {
     }
 
     public Boolean waitLoadingIconInvisible(WebDriver driver) {
-        waitForElementInvisible(driver, CommonPageUI.XPATH_LOADING_ICON);
+        waitForListElementsInvisible(driver, CommonPageUI.XPATH_LOADING_ICON);
         return isElementUndisplayed(driver, CommonPageUI.XPATH_LOADING_ICON);
     }
 

@@ -2,6 +2,10 @@ package pageUIs.pages;
 
 public class PersonalDetailsPageUI {
     public static final String XPATH_PAGE_TITLE = "xpath=//h6[text()='Personal Details']";
+    public static final String XPATH_CHANGE_PROFILE_PICTURE_TITLE = "xpath=//h6[text()='Change Profile Picture']";
+    public static final String XPATH_AVATAR_IMAGE = "xpath=//img[@class='employee-image']";
+    public static final String XPATH_AVATAR_UPLOAD_INPUT = "xpath=//input[@type='file']";
+    public static final String XPATH_AVATAR_IMAGE_UPLOADED_BASE64 = "xpath=//img[starts-with(@src,'data:image')]";
     public static final String XPATH_FIRSTNAME_INPUT = "xpath=//input[@name='firstName']";
     public static final String XPATH_MIDDLENAME_INPUT = "xpath=//input[@name='middleName']";
     public static final String XPATH_LASTNAME_INPUT = "xpath=//input[@name='lastName']";

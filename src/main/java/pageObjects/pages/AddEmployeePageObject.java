@@ -42,7 +42,7 @@ public class AddEmployeePageObject extends PIMPageObject {
 
     public String getEmployeeId() {
         waitForElementVisible(driver, AddEmployeePageUI.XPATH_EMPLOYEE_ID_INPUT);
-        return getElementText(driver, AddEmployeePageUI.XPATH_EMPLOYEE_ID_INPUT);
+        return getElementAttribute(driver, AddEmployeePageUI.XPATH_EMPLOYEE_ID_INPUT, "value");
     }
 
     public void checkCreateLoginDetails() {

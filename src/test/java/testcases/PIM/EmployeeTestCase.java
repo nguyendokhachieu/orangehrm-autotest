@@ -5,7 +5,6 @@ import commons.GlobalConstants;
 import commons.PageGeneratorManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
-import org.openqa.selenium.devtools.v85.page.Page;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -28,6 +27,7 @@ public class EmployeeTestCase extends BaseTest {
     private String driversLicenseNumber = "39392000023";
     private String username = "user_" + new Random().nextInt(299999);
     private String password = GlobalConstants.ADMIN_PASSWORD;
+    private String employeeId = "0004";
 
     @BeforeClass
     public void beforeClass() {
@@ -43,6 +43,7 @@ public class EmployeeTestCase extends BaseTest {
         Allure.step("Step 02 - Click Add button");
         addEmployeePage = employeeListPage.clickAddButton(driver);
         Allure.step("Step 03 - Input new employee information");
+        employeeId = addEmployeePage.getEmployeeId();
         personalDetailsPage = addEmployeePage.addNewEmployeeWithFullInfo(firstName, middleName, lastName, username, password);
         Assert.assertTrue(employeeListPage.waitToastMessageVisible(driver, "Successfully Saved"),
                 "Toast message is not displayed");
@@ -53,6 +54,7 @@ public class EmployeeTestCase extends BaseTest {
         Assert.assertEquals(personalDetailsPage.getFirstName(), firstName);
         Assert.assertEquals(personalDetailsPage.getMiddleName(), middleName);
         Assert.assertEquals(personalDetailsPage.getLastName(), lastName);
+        Assert.assertEquals(personalDetailsPage.getEmployeeId(), employeeId);
 
         Allure.step("Step 04 - Update employee information");
         personalDetailsPage.inputToDriversLicenseNumber(driversLicenseNumber);
@@ -70,7 +72,21 @@ public class EmployeeTestCase extends BaseTest {
     @Description("TC002 Upload avatar")
     @Test
     public void TC002_UploadAvatar() {
+        dashboardPage.clickLeftSidebarLink(driver, "PIM");
+        employeeListPage = PageGeneratorManager.getEmployeeListPage(driver);
+        employeeListPage.inputToEmployeeId(employeeId);
+        employeeListPage.clickSearchButton();
+        employeeListPage.waitLoadingIconInvisible(driver);
 
+        personalDetailsPage = employeeListPage.clickEditIconById(employeeId);
+        personalDetailsPage.waitLoadingIconInvisible(driver);
+        personalDetailsPage.waitPageTitleVisible(driver);
+        personalDetailsPage.clickAvatar();
+        personalDetailsPage.waitForChangeProfilePictureTitleVisible();
+        personalDetailsPage.clickToUploadAvatar(GlobalConstants.TEST_RESOURCES_UPLOAD_PATH + "avatar.jpg");
+        Assert.assertTrue(personalDetailsPage.isAvatarUploadedBase64());
+        personalDetailsPage.clickSaveButton();
+        Assert.assertTrue(personalDetailsPage.waitToastMessageVisible(driver, "Successfully Updated"));
     }
 
     @Description("TC003")
