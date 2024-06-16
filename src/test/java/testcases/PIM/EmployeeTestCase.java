@@ -1,11 +1,14 @@
 package testcases.PIM;
 
 import commons.BaseTest;
+import commons.DataProviderFactory;
 import commons.GlobalConstants;
 import commons.PageGeneratorManager;
+import helpers.RandomHelper;
 import helpers.ToastMessages;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
+import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -53,8 +56,8 @@ public class EmployeeTestCase extends BaseTest {
         Assert.assertTrue(employeeListPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_SAVED),
                 "Toast message is not displayed");
 
-        personalDetailsPage.waitLoadingIconInvisible(driver);
         personalDetailsPage.waitPageTitleVisible(driver);
+        personalDetailsPage.waitLoadingIconInvisible(driver);
 
         Assert.assertEquals(personalDetailsPage.getFirstName(), firstName);
         Assert.assertEquals(personalDetailsPage.getMiddleName(), middleName);
@@ -121,8 +124,20 @@ public class EmployeeTestCase extends BaseTest {
     }
 
     @Description("TC004 Update Contact Details")
-    @Test
-    public void TC004_ContactDetails() {
+    @Test(dataProvider = "jsonData", dataProviderClass = DataProviderFactory.class)
+    public void TC004_ContactDetails(JSONObject data) {
+        String street1 = (String) data.get("Street 1");
+        String street2 = (String) data.get("Street 2");
+        String city = (String) data.get("City");
+        String stateProvince = (String) data.get("State/Province");
+        String zipPostalCode = (String) data.get("Zip/Postal Code");
+        String country = (String) data.get("Country");
+        String home = (String) data.get("Home");
+        String mobile = (String) data.get("Mobile");
+        String work = (String) data.get("Work");
+        String workEmail = RandomHelper.generateRandomEmail();
+        String otherEmail = RandomHelper.generateRandomEmail();
+
         dashboardPage.clickLeftSidebarLink(driver, "PIM");
         employeeListPage = PageGeneratorManager.getEmployeeListPage(driver);
         employeeListPage.inputToEmployeeId(employeeId);
@@ -137,33 +152,33 @@ public class EmployeeTestCase extends BaseTest {
         contactDetailsPage = PageGeneratorManager.getContactDetailsPage(driver);
         contactDetailsPage.waitLoadingIconInvisible(driver);
 
-        contactDetailsPage.inputToFieldByFieldName("Street 1", "D1");
-        contactDetailsPage.inputToFieldByFieldName("Street 2", "Tan Phu");
-        contactDetailsPage.inputToFieldByFieldName("City", "Thu Duc");
-        contactDetailsPage.inputToFieldByFieldName("State/Province", "HCMC");
-        contactDetailsPage.inputToFieldByFieldName("Zip/Postal Code", "700000");
-        contactDetailsPage.selectCountry("Viet Nam");
-        contactDetailsPage.inputToFieldByFieldName("Home", "0981112221");
-        contactDetailsPage.inputToFieldByFieldName("Mobile", "0981119992");
-        contactDetailsPage.inputToFieldByFieldName("Work", "0999991111");
-        contactDetailsPage.inputToFieldByFieldName("Work Email", "work@email.com");
-        contactDetailsPage.inputToFieldByFieldName("Other Email", "personal@email.com");
+        contactDetailsPage.inputToFieldByFieldName("Street 1", street1);
+        contactDetailsPage.inputToFieldByFieldName("Street 2", street2);
+        contactDetailsPage.inputToFieldByFieldName("City", city);
+        contactDetailsPage.inputToFieldByFieldName("State/Province", stateProvince);
+        contactDetailsPage.inputToFieldByFieldName("Zip/Postal Code", zipPostalCode);
+        contactDetailsPage.selectCountry(country);
+        contactDetailsPage.inputToFieldByFieldName("Home", home);
+        contactDetailsPage.inputToFieldByFieldName("Mobile", mobile);
+        contactDetailsPage.inputToFieldByFieldName("Work", work);
+        contactDetailsPage.inputToFieldByFieldName("Work Email", workEmail);
+        contactDetailsPage.inputToFieldByFieldName("Other Email", otherEmail);
 
         contactDetailsPage.clickSaveButton();
         Assert.assertTrue(contactDetailsPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_UPDATED));
         contactDetailsPage.waitLoadingIconInvisible(driver);
 
-        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Street 1"), "D1");
-        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Street 2"), "Tan Phu");
-        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("City"), "Thu Duc");
-        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("State/Province"), "HCMC");
-        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Zip/Postal Code"), "700000");
-        Assert.assertTrue(contactDetailsPage.isCountrySelected("Viet Nam"));
-        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Home"), "0981112221");
-        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Mobile"), "0981119992");
-        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Work"), "0999991111");
-        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Work Email"), "work@email.com");
-        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Other Email"), "personal@email.com");
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Street 1"), street1);
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Street 2"), street2);
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("City"), city);
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("State/Province"), stateProvince);
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Zip/Postal Code"), zipPostalCode);
+        Assert.assertTrue(contactDetailsPage.isCountrySelected(country));
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Home"), home);
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Mobile"), mobile);
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Work"), work);
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Work Email"), workEmail);
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Other Email"), otherEmail);
     }
 
     @Description("TC005")

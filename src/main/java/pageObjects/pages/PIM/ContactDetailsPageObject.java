@@ -17,8 +17,8 @@ public class ContactDetailsPageObject extends PIMPageObject {
     }
 
     public void selectCountry(String countryName) {
-        if (!isCountrySelected(countryName)) {
-            selectItemInCustomDropdown(driver, ContactDetailsPageUI.XPATH_COUNTRY_SELECT_PARENT, ContactDetailsPageUI.FM_XPATH_COUNTRY_SELECT_CHILD, countryName);
+        if (isElementUndisplayed(driver, ContactDetailsPageUI.FM_XPATH_SELECTED_COUNTRY, countryName)) {
+            selectItemInCustomDropdown(driver, ContactDetailsPageUI.XPATH_COUNTRY_SELECT_PARENT, ContactDetailsPageUI.FM_XPATH_COUNTRY_SELECT_CHILD, countryName, countryName);
         }
     }
 

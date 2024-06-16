@@ -212,6 +212,23 @@ public class BasePage {
         }
     }
 
+    protected void selectItemInCustomDropdown(WebDriver driver, String parentLocator, String childLocator, String visibleText, String... values) {
+        clickToElement(driver, parentLocator);
+        sleepInSeconds(1);
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        List<WebElement> allOptions = explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(getDynamicLocator(childLocator, values))));
+        for (WebElement option: allOptions) {
+            if (option.getText().trim().equals(visibleText)) {
+                JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+                jsExecutor.executeScript("arguments[0].scrollIntoView(true);", option);
+                sleepInSeconds(1);
+                option.click();
+                sleepInSeconds(1);
+                break;
+            }
+        }
+    }
+
     protected String getElementText(WebDriver driver, String locator) {
         return getWebElement(driver, locator).getText();
     }

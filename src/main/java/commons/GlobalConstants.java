@@ -7,4 +7,5 @@ public class GlobalConstants {
     public static final String ADMIN_USERNAME = "orangehrm";
     public static final String ADMIN_PASSWORD = "M*&Ane121ghj";
     public static final String TEST_RESOURCES_UPLOAD_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "resources" + File.separator + "upload" + File.separator;
+    public static final String TEST_RESOURCES_TEST_DATA_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "resources" + File.separator + "testData" + File.separator;
 }
