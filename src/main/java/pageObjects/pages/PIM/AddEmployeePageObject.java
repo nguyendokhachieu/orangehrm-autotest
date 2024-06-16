@@ -12,7 +12,7 @@ public class AddEmployeePageObject extends PIMPageObject {
         this.driver = driver;
     }
 
-    public PersonalDetailsPageObject addNewEmployeeWithFullInfo(String firstName, String middleName, String lastName, String username, String password) {
+    public void inputNewEmployeeWithFullInfo(String firstName, String middleName, String lastName, String username, String password) {
         inputToFirstName(firstName);
         inputToMiddleName(middleName);
         inputToLastName(lastName);
@@ -22,7 +22,6 @@ public class AddEmployeePageObject extends PIMPageObject {
         checkEnabledStatus();
         inputToPassword(password);
         inputToConfirmPassword(password);
-        return clickSaveButton();
     }
 
     private void inputToFirstName(String firstName) {
@@ -72,7 +71,7 @@ public class AddEmployeePageObject extends PIMPageObject {
         sendKeyToElement(driver, AddEmployeePageUI.XPATH_CONFIRM_PASSWORD_INPUT, password);
     }
 
-    private PersonalDetailsPageObject clickSaveButton() {
+    public PersonalDetailsPageObject clickSaveButton() {
         waitForElementClickable(driver, AddEmployeePageUI.XPATH_SAVE_BUTTON);
         clickToElement(driver, AddEmployeePageUI.XPATH_SAVE_BUTTON);
         return PageGeneratorManager.getPersonalDetailsPage(driver);

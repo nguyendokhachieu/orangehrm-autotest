@@ -4,6 +4,7 @@ import commons.BaseTest;
 import commons.DataProviderFactory;
 import commons.GlobalConstants;
 import commons.PageGeneratorManager;
+import helpers.JavaMessages;
 import helpers.RandomHelper;
 import helpers.ToastMessages;
 import io.qameta.allure.Allure;
@@ -18,8 +19,6 @@ import pageObjects.pages.PIM.ContactDetailsPageObject;
 import pageObjects.pages.PIM.EmployeeListPageObject;
 import pageObjects.pages.PIM.PersonalDetailsPageObject;
 
-import java.util.Random;
-
 public class EmployeeTestCase extends BaseTest {
     private DashboardPageObject dashboardPage;
     private EmployeeListPageObject employeeListPage;
@@ -27,11 +26,7 @@ public class EmployeeTestCase extends BaseTest {
     private PersonalDetailsPageObject personalDetailsPage;
     private ContactDetailsPageObject contactDetailsPage;
 
-    private String firstName = "Auto";
-    private String lastName = "test";
-    private String middleName = "111";
-    private String driversLicenseNumber = "39392000023";
-    private String username = "user_" + new Random().nextInt(299999);
+    private String username = RandomHelper.generateRandomUsername();
     private String password = GlobalConstants.ADMIN_PASSWORD;
     private String employeeId = "0004";
     private String attachmentFileName = "attachment1.jpg";
@@ -43,19 +38,33 @@ public class EmployeeTestCase extends BaseTest {
     }
 
     @Description("TC001 Add new employee")
-    @Test
-    public void TC001_AddNewEmployee() {
+    @Test(dataProvider = "jsonData", dataProviderClass = DataProviderFactory.class)
+    public void TC001_AddNewEmployee(JSONObject data) {
+        String firstName = (String) data.get("firstName");
+        String lastName = (String) data.get("lastName");
+        String middleName = (String) data.get("middleName");
+        String driversLicenseNumber = (String) data.get("driversLicenseNumber");
+        String licenseExpiryDate = (String) data.get("licenseExpiryDate");
+        String nationality = (String) data.get("nationality");
+        String maritalStatus = (String) data.get("maritalStatus");
+        String dateOfBirth = (String) data.get("dateOfBirth");
+
         Allure.step("Step 01 - Click PIM on side bar");
         dashboardPage.clickLeftSidebarLink(driver, "PIM");
         employeeListPage = PageGeneratorManager.getEmployeeListPage(driver);
+
         Allure.step("Step 02 - Click Add button");
         addEmployeePage = employeeListPage.clickAddButton(driver);
+
         Allure.step("Step 03 - Input new employee information");
         employeeId = addEmployeePage.getEmployeeId();
-        personalDetailsPage = addEmployeePage.addNewEmployeeWithFullInfo(firstName, middleName, lastName, username, password);
+        addEmployeePage.inputNewEmployeeWithFullInfo(firstName, middleName, lastName, username, password);
+        addEmployeePage.clickSaveButton();
         Assert.assertTrue(employeeListPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_SAVED),
-                "Toast message is not displayed");
+                JavaMessages.TOAST_MESSAGE_IS_NOT_DISPLAYED);
+        addEmployeePage.waitLoadingIconInvisible(driver);
 
+        personalDetailsPage = PageGeneratorManager.getPersonalDetailsPage(driver);
         personalDetailsPage.waitPageTitleVisible(driver);
         personalDetailsPage.waitLoadingIconInvisible(driver);
 
@@ -66,10 +75,10 @@ public class EmployeeTestCase extends BaseTest {
 
         Allure.step("Step 04 - Update employee information");
         personalDetailsPage.inputToDriversLicenseNumber(driversLicenseNumber);
-        personalDetailsPage.inputToLicenseExpiryDate("2025-05-06");
-        personalDetailsPage.selectNationality("Vietnamese");
-        personalDetailsPage.selectMaritalStatus("Single");
-        personalDetailsPage.inputToDateOfBirth("1999-09-09");
+        personalDetailsPage.inputToLicenseExpiryDate(licenseExpiryDate);
+        personalDetailsPage.selectNationality(nationality);
+        personalDetailsPage.selectMaritalStatus(maritalStatus);
+        personalDetailsPage.inputToDateOfBirth(dateOfBirth);
         personalDetailsPage.selectGenderMale();
         personalDetailsPage.clickSaveButton();
         Assert.assertTrue(personalDetailsPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_UPDATED));

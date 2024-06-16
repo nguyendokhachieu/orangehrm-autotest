@@ -13,9 +13,8 @@ public class CommonPageActions extends BasePage {
         clickToElement(driver, CommonPageUI.FM_XPATH_LEFT_SIDEBAR_LINK, linkText);
     }
 
-    public Boolean waitLoadingIconInvisible(WebDriver driver) {
+    public void waitLoadingIconInvisible(WebDriver driver) {
         waitForListElementsInvisible(driver, CommonPageUI.XPATH_LOADING_ICON);
-        return isElementUndisplayed(driver, CommonPageUI.XPATH_LOADING_ICON);
     }
 
     public Boolean waitToastMessageVisible(WebDriver driver, String message) {
