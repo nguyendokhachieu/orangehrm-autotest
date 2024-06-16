@@ -108,4 +108,53 @@ public class PersonalDetailsPageObject extends PIMPageObject {
         waitForElementVisible(driver, PersonalDetailsPageUI.XPATH_AVATAR_IMAGE_UPLOADED_BASE64);
         return isElementDisplayed(driver, PersonalDetailsPageUI.XPATH_AVATAR_IMAGE_UPLOADED_BASE64);
     }
+
+    public void clickAddButton() {
+        waitForElementClickable(driver, PersonalDetailsPageUI.XPATH_ADD_BUTTON);
+        clickToElement(driver, PersonalDetailsPageUI.XPATH_ADD_BUTTON);
+    }
+
+    public void uploadAttachment(String filePath) {
+        sleepInSeconds(1);
+        setAttributeInDOM(driver, PersonalDetailsPageUI.XPATH_ATTACHMENT_UPLOAD_FILE_INPUT, "style", "visibility: visible;max-width:10px;width:10px;height:10px;");
+        sleepInSeconds(1);
+        sendKeyToElement(driver, PersonalDetailsPageUI.XPATH_ATTACHMENT_UPLOAD_FILE_INPUT, filePath);
+        sleepInSeconds(1);
+    }
+
+    public String getFileUploadStatus() {
+        waitForElementVisible(driver, PersonalDetailsPageUI.XPATH_FILE_UPLOAD_STATUS);
+        return getElementText(driver, PersonalDetailsPageUI.XPATH_FILE_UPLOAD_STATUS);
+    }
+
+    public void inputToAttachmentComment(String comment) {
+        waitForElementVisible(driver, PersonalDetailsPageUI.XPATH_ATTACHMENT_COMMENT_TEXTAREA);
+        sendKeyToElement(driver, PersonalDetailsPageUI.XPATH_ATTACHMENT_COMMENT_TEXTAREA, comment);
+    }
+
+    public void clickSaveAttachment() {
+        waitForElementClickable(driver, PersonalDetailsPageUI.XPATH_ATTACHMENT_SAVE_BUTTON);
+        clickToElement(driver, PersonalDetailsPageUI.XPATH_ATTACHMENT_SAVE_BUTTON);
+    }
+
+    private int countNumberOfRowsInAttachment() {
+        waitForListElementsVisible(driver, PersonalDetailsPageUI.XPATH_TABLE_CARD);
+        return getSizeOfListElements(driver, PersonalDetailsPageUI.XPATH_TABLE_CARD);
+    }
+
+    private int getColumnIndexByColumnName(String columnName) {
+        waitForListElementsVisible(driver, PersonalDetailsPageUI.XPATH_COLUMN_INDEX_BY_COLUMN_NAME, columnName);
+        return getSizeOfListElements(driver, PersonalDetailsPageUI.XPATH_COLUMN_INDEX_BY_COLUMN_NAME, columnName) + 1;
+    }
+
+    public boolean isValueInColumnCorrect(String columnName, String expectedValue) {
+        int lastRowInTable = countNumberOfRowsInAttachment();
+        int columnIndex = getColumnIndexByColumnName(columnName);
+        String actualValue = getElementText(
+                driver,
+                PersonalDetailsPageUI.XPATH_TABLE_CELL_BY_ROW_INDEX_AND_COLUMN_INDEX,
+                String.valueOf(lastRowInTable),
+                String.valueOf(columnIndex));
+        return actualValue.equals(expectedValue);
+    }
 }

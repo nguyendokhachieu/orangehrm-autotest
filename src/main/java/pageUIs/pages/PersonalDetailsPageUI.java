@@ -26,4 +26,13 @@ public class PersonalDetailsPageUI {
     public static final String XPATH_GENDER_FEMALE_RADIO = "xpath=//label[text()='Female']/input";
 
     public static final String XPATH_SAVE_BUTTON = "xpath=//button[contains(string(),'Save')]";
+
+    public static final String XPATH_ADD_BUTTON = "xpath=//button[contains(string(),'Add')]";
+    public static final String XPATH_ATTACHMENT_UPLOAD_FILE_INPUT = "xpath=//h6[text()='Add Attachment']/parent::div//input[@type='file']";
+    public static final String XPATH_FILE_UPLOAD_STATUS = "xpath=//h6[text()='Add Attachment']/parent::div//div[@class='oxd-file-input-div']";
+    public static final String XPATH_ATTACHMENT_COMMENT_TEXTAREA = "xpath=//h6[text()='Add Attachment']/parent::div//textarea";
+    public static final String XPATH_ATTACHMENT_SAVE_BUTTON = "xpath=//h6[text()='Add Attachment']/parent::div//button[contains(string(),'Save')]";
+    public static final String XPATH_TABLE_CARD = "xpath=//div[@class='oxd-table-card']";
+    public static final String XPATH_COLUMN_INDEX_BY_COLUMN_NAME = "xpath=//div[@role='columnheader' and text()='%s']//preceding-sibling::div";
+    public static final String XPATH_TABLE_CELL_BY_ROW_INDEX_AND_COLUMN_INDEX = "xpath=//div[@class='oxd-table-card'][%s]//div[@role='cell'][%s]/div";
 }

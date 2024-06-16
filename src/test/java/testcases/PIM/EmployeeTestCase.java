@@ -3,6 +3,7 @@ package testcases.PIM;
 import commons.BaseTest;
 import commons.GlobalConstants;
 import commons.PageGeneratorManager;
+import helpers.ToastMessages;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import org.testng.Assert;
@@ -28,6 +29,8 @@ public class EmployeeTestCase extends BaseTest {
     private String username = "user_" + new Random().nextInt(299999);
     private String password = GlobalConstants.ADMIN_PASSWORD;
     private String employeeId = "0004";
+    private String attachmentFileName = "attachment1.jpg";
+    private String attachmentComment = "Comment of attachment1.jpg";
 
     @BeforeClass
     public void beforeClass() {
@@ -45,7 +48,7 @@ public class EmployeeTestCase extends BaseTest {
         Allure.step("Step 03 - Input new employee information");
         employeeId = addEmployeePage.getEmployeeId();
         personalDetailsPage = addEmployeePage.addNewEmployeeWithFullInfo(firstName, middleName, lastName, username, password);
-        Assert.assertTrue(employeeListPage.waitToastMessageVisible(driver, "Successfully Saved"),
+        Assert.assertTrue(employeeListPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_SAVED),
                 "Toast message is not displayed");
 
         personalDetailsPage.waitLoadingIconInvisible(driver);
@@ -64,7 +67,7 @@ public class EmployeeTestCase extends BaseTest {
         personalDetailsPage.inputToDateOfBirth("1999-09-09");
         personalDetailsPage.selectGenderMale();
         personalDetailsPage.clickSaveButton();
-        Assert.assertTrue(personalDetailsPage.waitToastMessageVisible(driver, "Successfully Updated"));
+        Assert.assertTrue(personalDetailsPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_UPDATED));
 
         // update for search function...
     }
@@ -86,13 +89,33 @@ public class EmployeeTestCase extends BaseTest {
         personalDetailsPage.clickToUploadAvatar(GlobalConstants.TEST_RESOURCES_UPLOAD_PATH + "avatar.jpg");
         Assert.assertTrue(personalDetailsPage.isAvatarUploadedBase64());
         personalDetailsPage.clickSaveButton();
-        Assert.assertTrue(personalDetailsPage.waitToastMessageVisible(driver, "Successfully Updated"));
+        Assert.assertTrue(personalDetailsPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_UPDATED));
     }
 
-    @Description("TC003")
+    @Description("TC003 In Personal Details, Add Attachments")
     @Test
-    public void TC003_PersonalDetails() {
+    public void TC003_PersonalDetailsAddAttachments() {
+        dashboardPage.clickLeftSidebarLink(driver, "PIM");
+        employeeListPage = PageGeneratorManager.getEmployeeListPage(driver);
+        employeeListPage.inputToEmployeeId(employeeId);
+        employeeListPage.clickSearchButton();
+        employeeListPage.waitLoadingIconInvisible(driver);
 
+        personalDetailsPage = employeeListPage.clickEditIconById(employeeId);
+        personalDetailsPage.waitLoadingIconInvisible(driver);
+        personalDetailsPage.waitPageTitleVisible(driver);
+
+        personalDetailsPage.clickAddButton();
+        Assert.assertEquals(personalDetailsPage.getFileUploadStatus(), "No file selected");
+        personalDetailsPage.uploadAttachment(GlobalConstants.TEST_RESOURCES_UPLOAD_PATH + attachmentFileName);
+        Assert.assertEquals(personalDetailsPage.getFileUploadStatus(), attachmentFileName);
+        personalDetailsPage.inputToAttachmentComment(attachmentComment);
+        personalDetailsPage.clickSaveAttachment();
+        Assert.assertTrue(personalDetailsPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_SAVED));
+        employeeListPage.waitLoadingIconInvisible(driver);
+
+        Assert.assertTrue(personalDetailsPage.isValueInColumnCorrect("File Name", attachmentFileName));
+        Assert.assertTrue(personalDetailsPage.isValueInColumnCorrect("Description", attachmentComment));
     }
 
     @Description("TC004")

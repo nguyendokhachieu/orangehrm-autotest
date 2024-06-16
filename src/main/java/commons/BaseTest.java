@@ -1,7 +1,7 @@
 package commons;
 
 import helpers.FileHelper;
-import helpers.Messages;
+import helpers.JavaMessages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -48,7 +48,7 @@ public class BaseTest {
                 driver = new EdgeDriver();
                 break;
             default:
-                throw new RuntimeException(Messages.BROWSER_NAME_IS_WRONG);
+                throw new RuntimeException(JavaMessages.BROWSER_NAME_IS_WRONG);
         }
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));

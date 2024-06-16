@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <listeners>
+        <listener class-name="reportConfig.TestNGListener"></listener>
+    </listeners>
+
+<!--    <test name="Run on chrome">-->
+<!--        <parameter name="browserName" value="chrome" />-->
+<!--        <classes>-->
+<!--            <class name="testcases.PIM.EmployeeTestCase"></class>-->
+<!--        </classes>-->
+<!--    </test>-->
+    <test name="Run on firefox">
+        <parameter name="browserName" value="firefox" />
+        <classes>
+            <class name="testcases.PIM.EmployeeTestCase">
+                <methods>
+                    <include name="TC003_PersonalDetailsAddAttachments"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+<!--    <test name="Run on edge">-->
+<!--        <parameter name="browserName" value="edge" />-->
+<!--        <classes>-->
+<!--            <class name="testcases.PIM.EmployeeTestCase"></class>-->
+<!--        </classes>-->
+<!--    </test>-->
+</suite>
