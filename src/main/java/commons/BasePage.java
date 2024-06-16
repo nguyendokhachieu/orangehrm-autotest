@@ -163,15 +163,23 @@ public class BasePage {
         getWebElement(driver, locator, values).click();
     }
 
+    private void clearField(WebElement element){
+        while(!element.getAttribute("value").equals("")){
+            element.sendKeys(Keys.BACK_SPACE);
+        }
+    }
+
     protected void sendKeyToElement(WebDriver driver, String locator, String keyToSend) {
         WebElement webElement = getWebElement(driver, locator);
         webElement.clear();
+        clearField(webElement);
         webElement.sendKeys(keyToSend);
     }
 
     protected void sendKeyToElement(WebDriver driver, String locator, String keyToSend, String... values) {
         WebElement webElement = getWebElement(driver, locator, values);
         webElement.clear();
+        clearField(webElement);
         webElement.sendKeys(keyToSend);
     }
 
@@ -351,8 +359,16 @@ public class BasePage {
         ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute('" + attributeName + "', '" + attributeValue + "');", getWebElement(driver, locator));
     }
 
+    protected void setAttributeInDOM(WebDriver driver, String locator, String attributeName, String attributeValue, String... values) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute('" + attributeName + "', '" + attributeValue + "');", getWebElement(driver, getDynamicLocator(locator, values)));
+    }
+
     protected void removeAttributeInDOM(WebDriver driver, String locator, String attributeToBeRemoved) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].removeAttribute('" + attributeToBeRemoved + "')'", getWebElement(driver, locator));
+    }
+
+    protected void removeAttributeInDOM(WebDriver driver, String locator, String attributeToBeRemoved, String... values) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].removeAttribute(\"" + attributeToBeRemoved + "\")", getWebElement(driver, getDynamicLocator(locator, values)));
     }
 
     protected void sendKeyToElementByJS(WebDriver driver, String locator, String keyToSend) {

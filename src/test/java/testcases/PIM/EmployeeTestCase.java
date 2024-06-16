@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pageObjects.pages.PIM.AddEmployeePageObject;
 import pageObjects.pages.Dashboard.DashboardPageObject;
+import pageObjects.pages.PIM.ContactDetailsPageObject;
 import pageObjects.pages.PIM.EmployeeListPageObject;
 import pageObjects.pages.PIM.PersonalDetailsPageObject;
 
@@ -21,6 +22,7 @@ public class EmployeeTestCase extends BaseTest {
     private EmployeeListPageObject employeeListPage;
     private AddEmployeePageObject addEmployeePage;
     private PersonalDetailsPageObject personalDetailsPage;
+    private ContactDetailsPageObject contactDetailsPage;
 
     private String firstName = "Auto";
     private String lastName = "test";
@@ -118,10 +120,50 @@ public class EmployeeTestCase extends BaseTest {
         Assert.assertTrue(personalDetailsPage.isValueInColumnCorrect("Description", attachmentComment));
     }
 
-    @Description("TC004")
+    @Description("TC004 Update Contact Details")
     @Test
     public void TC004_ContactDetails() {
+        dashboardPage.clickLeftSidebarLink(driver, "PIM");
+        employeeListPage = PageGeneratorManager.getEmployeeListPage(driver);
+        employeeListPage.inputToEmployeeId(employeeId);
+        employeeListPage.clickSearchButton();
+        employeeListPage.waitLoadingIconInvisible(driver);
 
+        personalDetailsPage = employeeListPage.clickEditIconById(employeeId);
+        personalDetailsPage.waitLoadingIconInvisible(driver);
+        personalDetailsPage.waitPageTitleVisible(driver);
+
+        personalDetailsPage.clickEmployeeInfoTabItem("Contact Details");
+        contactDetailsPage = PageGeneratorManager.getContactDetailsPage(driver);
+        contactDetailsPage.waitLoadingIconInvisible(driver);
+
+        contactDetailsPage.inputToFieldByFieldName("Street 1", "D1");
+        contactDetailsPage.inputToFieldByFieldName("Street 2", "Tan Phu");
+        contactDetailsPage.inputToFieldByFieldName("City", "Thu Duc");
+        contactDetailsPage.inputToFieldByFieldName("State/Province", "HCMC");
+        contactDetailsPage.inputToFieldByFieldName("Zip/Postal Code", "700000");
+        contactDetailsPage.selectCountry("Viet Nam");
+        contactDetailsPage.inputToFieldByFieldName("Home", "0981112221");
+        contactDetailsPage.inputToFieldByFieldName("Mobile", "0981119992");
+        contactDetailsPage.inputToFieldByFieldName("Work", "0999991111");
+        contactDetailsPage.inputToFieldByFieldName("Work Email", "work@email.com");
+        contactDetailsPage.inputToFieldByFieldName("Other Email", "personal@email.com");
+
+        contactDetailsPage.clickSaveButton();
+        Assert.assertTrue(contactDetailsPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_UPDATED));
+        contactDetailsPage.waitLoadingIconInvisible(driver);
+
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Street 1"), "D1");
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Street 2"), "Tan Phu");
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("City"), "Thu Duc");
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("State/Province"), "HCMC");
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Zip/Postal Code"), "700000");
+        Assert.assertTrue(contactDetailsPage.isCountrySelected("Viet Nam"));
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Home"), "0981112221");
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Mobile"), "0981119992");
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Work"), "0999991111");
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Work Email"), "work@email.com");
+        Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Other Email"), "personal@email.com");
     }
 
     @Description("TC005")
