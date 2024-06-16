@@ -1,7 +1,9 @@
 package commons;
 
 import org.openqa.selenium.WebDriver;
-import pageObjects.pages.*;
+import pageObjects.pages.Dashboard.DashboardPageObject;
+import pageObjects.pages.PIM.*;
+import pageObjects.pages.authentications.LoginPageObject;
 
 public class PageGeneratorManager {
     public static DashboardPageObject getDashboardPage(WebDriver driver) {
@@ -26,5 +28,9 @@ public class PageGeneratorManager {
 
     public static PersonalDetailsPageObject getPersonalDetailsPage(WebDriver driver) {
         return new PersonalDetailsPageObject(driver);
+    }
+
+    public static ContactDetailsPageObject getContactDetailsPage(WebDriver driver) {
+        return new ContactDetailsPageObject(driver);
     }
 }

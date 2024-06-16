@@ -1,4 +1,4 @@
-package pageUIs.pages;
+package pageUIs.pages.authentications;
 
 public class LoginPageUI {
     public static final String XPATH_USERNAME_INPUT = "xpath=//input[@name='username']";

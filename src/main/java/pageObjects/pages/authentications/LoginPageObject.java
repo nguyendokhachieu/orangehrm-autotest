@@ -1,9 +1,10 @@
-package pageObjects.pages;
+package pageObjects.pages.authentications;
 
 import commons.BasePage;
 import commons.PageGeneratorManager;
 import org.openqa.selenium.WebDriver;
-import pageUIs.pages.LoginPageUI;
+import pageObjects.pages.Dashboard.DashboardPageObject;
+import pageUIs.pages.authentications.LoginPageUI;
 
 public class LoginPageObject extends BasePage {
     private WebDriver driver;

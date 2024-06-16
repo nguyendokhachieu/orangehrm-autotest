@@ -1,4 +1,4 @@
-package pageUIs.pages;
+package pageUIs.pages.PIM;
 
 public class PersonalDetailsPageUI {
     public static final String XPATH_PAGE_TITLE = "xpath=//h6[text()='Personal Details']";

@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
-import pageObjects.pages.DashboardPageObject;
-import pageObjects.pages.LoginPageObject;
+import pageObjects.pages.Dashboard.DashboardPageObject;
+import pageObjects.pages.authentications.LoginPageObject;
 
 import java.util.Set;
 

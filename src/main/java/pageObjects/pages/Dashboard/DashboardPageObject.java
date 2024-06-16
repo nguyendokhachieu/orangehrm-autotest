@@ -1,12 +1,12 @@
-package pageObjects.pages;
+package pageObjects.pages.Dashboard;
 
 import org.openqa.selenium.WebDriver;
 import pageObjects.common.CommonPageActions;
 
-public class PIMPageObject extends CommonPageActions {
+public class DashboardPageObject extends CommonPageActions {
     private WebDriver driver;
 
-    public PIMPageObject(WebDriver driver) {
+    public DashboardPageObject(WebDriver driver) {
         this.driver = driver;
     }
 

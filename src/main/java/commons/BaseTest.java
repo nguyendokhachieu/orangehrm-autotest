@@ -10,7 +10,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
-import pageObjects.pages.LoginPageObject;
+import pageObjects.pages.authentications.LoginPageObject;
 
 import java.time.Duration;
 

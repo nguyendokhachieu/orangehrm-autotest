@@ -1,4 +1,4 @@
-package pageUIs.pages;
+package pageUIs.pages.PIM;
 
 public class AddEmployeePageUI {
     public static final String XPATH_FIRSTNAME_INPUT = "xpath=//input[@name='firstName']";

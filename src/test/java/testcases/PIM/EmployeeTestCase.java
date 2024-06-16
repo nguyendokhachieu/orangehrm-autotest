@@ -9,10 +9,10 @@ import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pageObjects.pages.AddEmployeePageObject;
-import pageObjects.pages.DashboardPageObject;
-import pageObjects.pages.EmployeeListPageObject;
-import pageObjects.pages.PersonalDetailsPageObject;
+import pageObjects.pages.PIM.AddEmployeePageObject;
+import pageObjects.pages.Dashboard.DashboardPageObject;
+import pageObjects.pages.PIM.EmployeeListPageObject;
+import pageObjects.pages.PIM.PersonalDetailsPageObject;
 
 import java.util.Random;
 

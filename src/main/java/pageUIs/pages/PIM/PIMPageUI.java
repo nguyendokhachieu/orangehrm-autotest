@@ -1,4 +1,4 @@
-package pageUIs.pages;
+package pageUIs.pages.PIM;
 
 public class PIMPageUI {
 }

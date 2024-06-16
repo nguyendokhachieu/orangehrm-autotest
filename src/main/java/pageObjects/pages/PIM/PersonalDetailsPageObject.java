@@ -1,7 +1,7 @@
-package pageObjects.pages;
+package pageObjects.pages.PIM;
 
 import org.openqa.selenium.WebDriver;
-import pageUIs.pages.PersonalDetailsPageUI;
+import pageUIs.pages.PIM.PersonalDetailsPageUI;
 
 public class PersonalDetailsPageObject extends PIMPageObject {
     private WebDriver driver;

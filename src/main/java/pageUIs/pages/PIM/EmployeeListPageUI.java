@@ -1,4 +1,4 @@
-package pageUIs.pages;
+package pageUIs.pages.PIM;
 
 public class EmployeeListPageUI {
     public static final String XPATH_EMPLOYEE_NAME_INPUT = "xpath=//label[text()='Employee Name']/parent::div/following-sibling::div//input";

@@ -1,8 +1,8 @@
-package pageObjects.pages;
+package pageObjects.pages.PIM;
 
 import commons.PageGeneratorManager;
 import org.openqa.selenium.WebDriver;
-import pageUIs.pages.EmployeeListPageUI;
+import pageUIs.pages.PIM.EmployeeListPageUI;
 
 public class EmployeeListPageObject extends PIMPageObject {
     private WebDriver driver;
