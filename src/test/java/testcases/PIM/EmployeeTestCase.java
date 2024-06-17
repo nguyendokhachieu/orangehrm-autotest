@@ -13,11 +13,8 @@ import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pageObjects.pages.PIM.AddEmployeePageObject;
+import pageObjects.pages.PIM.*;
 import pageObjects.pages.Dashboard.DashboardPageObject;
-import pageObjects.pages.PIM.ContactDetailsPageObject;
-import pageObjects.pages.PIM.EmployeeListPageObject;
-import pageObjects.pages.PIM.PersonalDetailsPageObject;
 
 public class EmployeeTestCase extends BaseTest {
     private DashboardPageObject dashboardPage;
@@ -25,6 +22,7 @@ public class EmployeeTestCase extends BaseTest {
     private AddEmployeePageObject addEmployeePage;
     private PersonalDetailsPageObject personalDetailsPage;
     private ContactDetailsPageObject contactDetailsPage;
+    private EmergencyContactsPageObject emergencyContactsPageObject;
 
     private String username = RandomHelper.generateRandomUsername();
     private String password = GlobalConstants.ADMIN_PASSWORD;
@@ -190,9 +188,45 @@ public class EmployeeTestCase extends BaseTest {
         Assert.assertEquals(contactDetailsPage.getValueFromFieldByFieldName("Other Email"), otherEmail);
     }
 
-    @Description("TC005")
-    @Test
-    public void TC005_EmergencyDetails() {
+    @Description("TC005 Emergency Contacts")
+    @Test(dataProvider = "jsonData", dataProviderClass = DataProviderFactory.class)
+    public void TC005_EmergencyContacts(JSONObject data) {
+        String name = (String) data.get("Name");
+        String relationship = (String) data.get("Relationship");
+        String homeTelephone = (String) data.get("Home Telephone");
+        String mobile = (String) data.get("Mobile");
+        String workTelephone = (String) data.get("Work Telephone");
+
+        dashboardPage.clickLeftSidebarLink(driver, "PIM");
+        employeeListPage = PageGeneratorManager.getEmployeeListPage(driver);
+        employeeListPage.inputToEmployeeId(employeeId);
+        employeeListPage.clickSearchButton();
+        employeeListPage.waitLoadingIconInvisible(driver);
+
+        personalDetailsPage = employeeListPage.clickEditIconById(employeeId);
+        personalDetailsPage.waitLoadingIconInvisible(driver);
+        personalDetailsPage.waitPageTitleVisible(driver);
+
+        personalDetailsPage.clickEmployeeInfoTabItem("Emergency Contacts");
+        emergencyContactsPageObject = PageGeneratorManager.getEmergencyContactsPage(driver);
+        emergencyContactsPageObject.waitLoadingIconInvisible(driver);
+
+        emergencyContactsPageObject.clickToAddNewEmergencyContact();
+        emergencyContactsPageObject.inputToEmergencyContactFieldByLabelName("Name", name);
+        emergencyContactsPageObject.inputToEmergencyContactFieldByLabelName("Relationship", relationship);
+        emergencyContactsPageObject.inputToEmergencyContactFieldByLabelName("Home Telephone", homeTelephone);
+        emergencyContactsPageObject.inputToEmergencyContactFieldByLabelName("Mobile", mobile);
+        emergencyContactsPageObject.inputToEmergencyContactFieldByLabelName("Work Telephone", workTelephone);
+
+        emergencyContactsPageObject.clickToSaveNewEmergencyContact();
+        Assert.assertTrue(emergencyContactsPageObject.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_SAVED));
+        emergencyContactsPageObject.waitLoadingIconInvisible(driver);
+
+        Assert.assertEquals(emergencyContactsPageObject.getCellContentOfLastRowAndColumnName("Name"), name);
+        Assert.assertEquals(emergencyContactsPageObject.getCellContentOfLastRowAndColumnName("Relationship"), relationship);
+        Assert.assertEquals(emergencyContactsPageObject.getCellContentOfLastRowAndColumnName("Home Telephone"), homeTelephone);
+        Assert.assertEquals(emergencyContactsPageObject.getCellContentOfLastRowAndColumnName("Mobile"), mobile);
+        Assert.assertEquals(emergencyContactsPageObject.getCellContentOfLastRowAndColumnName("Work Telephone"), workTelephone);
 
     }
 

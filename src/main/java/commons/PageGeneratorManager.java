@@ -33,4 +33,8 @@ public class PageGeneratorManager {
     public static ContactDetailsPageObject getContactDetailsPage(WebDriver driver) {
         return new ContactDetailsPageObject(driver);
     }
+
+    public static EmergencyContactsPageObject getEmergencyContactsPage(WebDriver driver) {
+        return new EmergencyContactsPageObject(driver);
+    }
 }
