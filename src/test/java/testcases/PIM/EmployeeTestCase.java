@@ -22,7 +22,8 @@ public class EmployeeTestCase extends BaseTest {
     private AddEmployeePageObject addEmployeePage;
     private PersonalDetailsPageObject personalDetailsPage;
     private ContactDetailsPageObject contactDetailsPage;
-    private EmergencyContactsPageObject emergencyContactsPageObject;
+    private EmergencyContactsPageObject emergencyContactsPage;
+    private DependentsPageObject dependentsPage;
 
     private String username = RandomHelper.generateRandomUsername();
     private String password = GlobalConstants.ADMIN_PASSWORD;
@@ -208,32 +209,61 @@ public class EmployeeTestCase extends BaseTest {
         personalDetailsPage.waitPageTitleVisible(driver);
 
         personalDetailsPage.clickEmployeeInfoTabItem("Emergency Contacts");
-        emergencyContactsPageObject = PageGeneratorManager.getEmergencyContactsPage(driver);
-        emergencyContactsPageObject.waitLoadingIconInvisible(driver);
+        emergencyContactsPage = PageGeneratorManager.getEmergencyContactsPage(driver);
+        emergencyContactsPage.waitLoadingIconInvisible(driver);
 
-        emergencyContactsPageObject.clickToAddNewEmergencyContact();
-        emergencyContactsPageObject.inputToEmergencyContactFieldByLabelName("Name", name);
-        emergencyContactsPageObject.inputToEmergencyContactFieldByLabelName("Relationship", relationship);
-        emergencyContactsPageObject.inputToEmergencyContactFieldByLabelName("Home Telephone", homeTelephone);
-        emergencyContactsPageObject.inputToEmergencyContactFieldByLabelName("Mobile", mobile);
-        emergencyContactsPageObject.inputToEmergencyContactFieldByLabelName("Work Telephone", workTelephone);
+        emergencyContactsPage.clickToAddNewEmergencyContact();
+        emergencyContactsPage.inputToEmergencyContactFieldByLabelName("Name", name);
+        emergencyContactsPage.inputToEmergencyContactFieldByLabelName("Relationship", relationship);
+        emergencyContactsPage.inputToEmergencyContactFieldByLabelName("Home Telephone", homeTelephone);
+        emergencyContactsPage.inputToEmergencyContactFieldByLabelName("Mobile", mobile);
+        emergencyContactsPage.inputToEmergencyContactFieldByLabelName("Work Telephone", workTelephone);
 
-        emergencyContactsPageObject.clickToSaveNewEmergencyContact();
-        Assert.assertTrue(emergencyContactsPageObject.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_SAVED));
-        emergencyContactsPageObject.waitLoadingIconInvisible(driver);
+        emergencyContactsPage.clickToSaveNewEmergencyContact();
+        Assert.assertTrue(emergencyContactsPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_SAVED));
+        emergencyContactsPage.waitLoadingIconInvisible(driver);
 
-        Assert.assertEquals(emergencyContactsPageObject.getCellContentOfLastRowAndColumnName("Name"), name);
-        Assert.assertEquals(emergencyContactsPageObject.getCellContentOfLastRowAndColumnName("Relationship"), relationship);
-        Assert.assertEquals(emergencyContactsPageObject.getCellContentOfLastRowAndColumnName("Home Telephone"), homeTelephone);
-        Assert.assertEquals(emergencyContactsPageObject.getCellContentOfLastRowAndColumnName("Mobile"), mobile);
-        Assert.assertEquals(emergencyContactsPageObject.getCellContentOfLastRowAndColumnName("Work Telephone"), workTelephone);
+        Assert.assertEquals(emergencyContactsPage.getCellContentOfLastRowAndColumnName("Name"), name);
+        Assert.assertEquals(emergencyContactsPage.getCellContentOfLastRowAndColumnName("Relationship"), relationship);
+        Assert.assertEquals(emergencyContactsPage.getCellContentOfLastRowAndColumnName("Home Telephone"), homeTelephone);
+        Assert.assertEquals(emergencyContactsPage.getCellContentOfLastRowAndColumnName("Mobile"), mobile);
+        Assert.assertEquals(emergencyContactsPage.getCellContentOfLastRowAndColumnName("Work Telephone"), workTelephone);
 
     }
 
-    @Description("TC006")
-    @Test
-    public void TC006_AssignDependent() {
+    @Description("TC006 Add New Dependent")
+    @Test(dataProvider = "jsonData", dataProviderClass = DataProviderFactory.class)
+    public void TC006_AssignDependent(JSONObject data) {
+        String name = (String) data.get("name");
+        String relationship = (String) data.get("relationship");
+        String dateOfBirth = (String) data.get("dateOfBirth");
 
+        dashboardPage.clickLeftSidebarLink(driver, "PIM");
+        employeeListPage = PageGeneratorManager.getEmployeeListPage(driver);
+        employeeListPage.inputToEmployeeId(employeeId);
+        employeeListPage.clickSearchButton();
+        employeeListPage.waitLoadingIconInvisible(driver);
+
+        personalDetailsPage = employeeListPage.clickEditIconById(employeeId);
+        personalDetailsPage.waitLoadingIconInvisible(driver);
+        personalDetailsPage.waitPageTitleVisible(driver);
+
+        personalDetailsPage.clickEmployeeInfoTabItem("Dependents");
+        dependentsPage = PageGeneratorManager.getDependentsPage(driver);
+        dependentsPage.waitLoadingIconInvisible(driver);
+
+        dependentsPage.clickToAddDependent();
+        dependentsPage.inputToName(name);
+        dependentsPage.selectRelationship(relationship);
+        dependentsPage.inputToDateOfBirth(dateOfBirth);
+
+        dependentsPage.clickSaveButton();
+        dependentsPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_SAVED);
+        dependentsPage.waitLoadingIconInvisible(driver);
+
+        Assert.assertEquals(dependentsPage.getCellContentOfLastRowAndColumnName("Name"), name);
+        Assert.assertEquals(dependentsPage.getCellContentOfLastRowAndColumnName("Relationship"), relationship);
+        Assert.assertEquals(dependentsPage.getCellContentOfLastRowAndColumnName("Date of Birth"), dateOfBirth);
     }
 
     @Description("TC007")
