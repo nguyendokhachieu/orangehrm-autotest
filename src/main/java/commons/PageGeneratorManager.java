@@ -1,6 +1,9 @@
 package commons;
 
 import org.openqa.selenium.WebDriver;
+import pageObjects.pages.Admin.AdminPageObject;
+import pageObjects.pages.Admin.EditUserPageObject;
+import pageObjects.pages.Admin.UserManagementPageObject;
 import pageObjects.pages.Dashboard.DashboardPageObject;
 import pageObjects.pages.PIM.*;
 import pageObjects.pages.authentications.LoginPageObject;
@@ -40,5 +43,17 @@ public class PageGeneratorManager {
 
     public static DependentsPageObject getDependentsPage(WebDriver driver) {
         return new DependentsPageObject(driver);
+    }
+
+    public static AdminPageObject getAdminPage(WebDriver driver) {
+        return new AdminPageObject(driver);
+    }
+
+    public static UserManagementPageObject getUserManagementPage(WebDriver driver) {
+        return new UserManagementPageObject(driver);
+    }
+
+    public static EditUserPageObject getEditUserPage(WebDriver driver) {
+        return new EditUserPageObject(driver);
     }
 }
