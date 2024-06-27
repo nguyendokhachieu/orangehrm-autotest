@@ -1,6 +1,8 @@
 package pageObjects.pages.Admin;
 
+import commons.PageGeneratorManager;
 import org.openqa.selenium.WebDriver;
+import pageUIs.pages.Admin.EditUserPageUI;
 
 public class EditUserPageObject extends AdminPageObject {
     private WebDriver driver;
@@ -10,4 +12,19 @@ public class EditUserPageObject extends AdminPageObject {
         this.driver = driver;
     }
 
+    public void inputToEmployeeName(String employeeName) {
+        waitForElementVisible(driver, EditUserPageUI.XPATH_EMPLOYEE_NAME_INPUT);
+        sendKeyToElement(driver, EditUserPageUI.XPATH_EMPLOYEE_NAME_INPUT, employeeName);
+    }
+
+    public void clickToEmployeeNameOption(String employeeName) {
+        waitForElementVisible(driver, EditUserPageUI.FM_XPATH_EMPLOYEE_NAME_DROPDOWN_OPTION_BY_TEXT, employeeName);
+        clickToElement(driver, EditUserPageUI.FM_XPATH_EMPLOYEE_NAME_DROPDOWN_OPTION_BY_TEXT, employeeName);
+    }
+
+    public UserManagementPageObject clickSaveButton() {
+        waitForElementClickable(driver, EditUserPageUI.XPATH_SAVE_BUTTON);
+        clickToElement(driver, EditUserPageUI.XPATH_SAVE_BUTTON);
+        return PageGeneratorManager.getUserManagementPage(driver);
+    }
 }

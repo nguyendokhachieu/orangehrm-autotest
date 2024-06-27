@@ -10,4 +10,8 @@ public class RandomHelper {
     public static String generateRandomUsername() {
         return "user_" + new Random().nextInt(299999);
     }
+
+    public static String generateRandomEmployeeName() {
+        return "Sample User " + new Random().nextInt(299999);
+    }
 }
