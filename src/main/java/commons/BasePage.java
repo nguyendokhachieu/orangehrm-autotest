@@ -196,6 +196,7 @@ public class BasePage {
     }
 
     protected void selectItemInCustomDropdown(WebDriver driver, String parentLocator, String childLocator, String visibleText) {
+        waitForElementClickable(driver, parentLocator);
         clickToElement(driver, parentLocator);
         sleepInSeconds(1);
         WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
@@ -213,6 +214,7 @@ public class BasePage {
     }
 
     protected void selectItemInCustomDropdown(WebDriver driver, String parentLocator, String childLocator, String visibleText, String... values) {
+        waitForElementClickable(driver, parentLocator);
         clickToElement(driver, parentLocator);
         sleepInSeconds(1);
         WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
@@ -227,6 +229,18 @@ public class BasePage {
                 break;
             }
         }
+    }
+
+    protected void scrollIntoViewByJS(WebDriver driver, String locator) {
+        WebElement webElement = getWebElement(driver, locator);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", webElement);
+        sleepInSeconds(1);
+    }
+
+    protected void scrollIntoViewByJS(WebDriver driver, String locator, String... values) {
+        WebElement webElement = getWebElement(driver, locator, values);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", webElement);
+        sleepInSeconds(1);
     }
 
     protected String getElementText(WebDriver driver, String locator) {

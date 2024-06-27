@@ -73,11 +73,29 @@ public class SystemUserTestCase extends BaseTest {
         userManagementPage.waitLoadingIconInvisible(driver);
     }
 
-    @Description("TC002 ")
+    @Description("TC002 Search Not Found, Then Clear All Inputs")
     @Test
-    public void TC002_() {
+    public void TC002_SearchNotFound() {
+        dashboardPage.clickLeftSidebarLink(driver, "Admin");
+        userManagementPage = PageGeneratorManager.getUserManagementPage(driver);
+        userManagementPage.inputToUsername("fake user name not found!!");
+        userManagementPage.selectUserRole("Admin");
+        userManagementPage.inputToEmployeeName("Sample User  2");
+        userManagementPage.selectEmployeeName("Sample User  2");
+        userManagementPage.selectStatus("Enabled");
+        userManagementPage.clickSearchButton();
 
+        Assert.assertTrue(userManagementPage.waitToastMessageVisible(driver, ToastMessages.NO_RECORDS_FOUND));
+        userManagementPage.waitLoadingIconInvisible(driver);
+        Assert.assertTrue(userManagementPage.waitNoRecordsFoundVisible());
 
+        userManagementPage.clickResetButton();
+        userManagementPage.waitLoadingIconInvisible(driver);
+
+        Assert.assertEquals(userManagementPage.getUsernameInputValue(), "");
+        Assert.assertEquals(userManagementPage.getUserRoleSelectedValue(), "-- Select --");
+        Assert.assertEquals(userManagementPage.getEmployeeNameInputValue(), "");
+        Assert.assertEquals(userManagementPage.getStatusSelectedValue(), "-- Select --");
     }
 
 }
