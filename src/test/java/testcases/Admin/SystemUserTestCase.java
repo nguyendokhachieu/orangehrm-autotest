@@ -98,4 +98,17 @@ public class SystemUserTestCase extends BaseTest {
         Assert.assertEquals(userManagementPage.getStatusSelectedValue(), "-- Select --");
     }
 
+    @Description("TC003 Click Help button, verify new tab open, then switch back to original page, close the Help page")
+    @Test
+    public void TC003_ClickHelpButton() {
+        dashboardPage.clickLeftSidebarLink(driver, "Admin");
+        userManagementPage = PageGeneratorManager.getUserManagementPage(driver);
+        userManagementPage.clickHelpButton();
+
+        Assert.assertEquals(userManagementPage.countNumberOfTabsInBrowser(driver), 2);
+        userManagementPage.switchToTabByTitle(driver, "How to Add a User Account – OrangeHRM");
+        Assert.assertTrue(userManagementPage.isHelpPageTitleDisplayed());
+        userManagementPage.closeAllTabsExceptTitle(driver, "OrangeHRM");
+    }
+
 }

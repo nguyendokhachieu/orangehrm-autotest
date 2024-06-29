@@ -1,15 +1,12 @@
 package commons;
 
-import io.qameta.allure.internal.shadowed.jackson.databind.annotation.JsonTypeResolver;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.StringReader;
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
@@ -100,35 +97,54 @@ public class BasePage {
         waitForAlertPresence(driver).sendKeys(keyToSend);
     }
 
-    protected void switchToWindowByID(WebDriver driver, String id) {
-        Set<String> allWindowIds = driver.getWindowHandles();
-        for (String windowId: allWindowIds) {
-            if (!windowId.equals(id)) {
-                driver.switchTo().window(windowId);
+    public void switchToTabByID(WebDriver driver, String id) {
+        Set<String> allTabIds = driver.getWindowHandles();
+        for (String tabId: allTabIds) {
+            if (!tabId.equals(id)) {
+                driver.switchTo().window(tabId);
                 break;
             }
         }
     }
 
-    protected void switchToWindowByTitle(WebDriver driver, String title) {
-        Set<String> allWindowIds = driver.getWindowHandles();
-        for (String windowId: allWindowIds) {
-            driver.switchTo().window(windowId);
+    public void switchToTabByTitle(WebDriver driver, String title) {
+        Set<String> allTabIds = driver.getWindowHandles();
+        for (String tabId: allTabIds) {
+            driver.switchTo().window(tabId);
             if (driver.getTitle().equals(title)) {
                 break;
             }
         }
     }
 
-    protected void closeAllWindowsExceptId(WebDriver driver, String id) {
-        Set<String> allWindowIds = driver.getWindowHandles();
-        for (String windowId: allWindowIds) {
-            if (!windowId.equals(id)) {
-                driver.switchTo().window(windowId);
+    public int countNumberOfTabsInBrowser(WebDriver driver) {
+        return driver.getWindowHandles().size();
+    }
+
+    public void closeAllTabsExceptId(WebDriver driver, String id) {
+        Set<String> allTabIds = driver.getWindowHandles();
+        for (String tabId: allTabIds) {
+            if (!tabId.equals(id)) {
+                driver.switchTo().window(tabId);
                 driver.close();
             }
         }
         driver.switchTo().window(id);
+    }
+
+    public void closeAllTabsExceptTitle(WebDriver driver, String title) {
+        Set<String> allTabIds = driver.getWindowHandles();
+        String originalId = driver.getWindowHandle();
+        for (String tabId: allTabIds) {
+            driver.switchTo().window(tabId);
+            if (!driver.getTitle().equals(title)) {
+                driver.switchTo().window(tabId);
+                driver.close();
+            } else {
+                originalId = driver.getWindowHandle();
+            }
+        }
+        driver.switchTo().window(originalId);
     }
 
     protected WebElement getWebElement(WebDriver driver, String locator) {
@@ -457,6 +473,10 @@ public class BasePage {
 
     protected void waitForElementClickable(WebDriver driver, String locator, String... values) {
         (new WebDriverWait(driver, Duration.ofSeconds(timeout))).until(ExpectedConditions.elementToBeClickable(getByLocator(getDynamicLocator(locator, values))));
+    }
+
+    protected void waitForNumberOfWindowsToBe(WebDriver driver, int numberOfWindows) {
+        (new WebDriverWait(driver, Duration.ofSeconds(timeout))).until(ExpectedConditions.numberOfWindowsToBe(numberOfWindows));
     }
 
     private void overrideGlobalTimeout(WebDriver driver, long newTimeout) {

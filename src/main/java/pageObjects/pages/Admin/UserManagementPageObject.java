@@ -12,6 +12,17 @@ public class UserManagementPageObject extends AdminPageObject {
         this.driver = driver;
     }
 
+    public void clickHelpButton() {
+        waitForElementClickable(driver, UserManagementPageUI.XPATH_HELP_BUTTON);
+        clickToElement(driver, UserManagementPageUI.XPATH_HELP_BUTTON);
+        waitForNumberOfWindowsToBe(driver, 2);
+    }
+
+    public boolean isHelpPageTitleDisplayed() {
+        waitForElementVisible(driver, UserManagementPageUI.XPATH_HELP_PAGE_TITLE);
+        return isElementDisplayed(driver, UserManagementPageUI.XPATH_HELP_PAGE_TITLE);
+    }
+
     public void inputToUsername(String username) {
         waitForElementVisible(driver, UserManagementPageUI.XPATH_USERNAME_INPUT);
         sendKeyToElement(driver, UserManagementPageUI.XPATH_USERNAME_INPUT, username);

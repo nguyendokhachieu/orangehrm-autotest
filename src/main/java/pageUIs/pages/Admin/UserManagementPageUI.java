@@ -1,6 +1,8 @@
 package pageUIs.pages.Admin;
 
 public class UserManagementPageUI {
+    public static final String XPATH_HELP_BUTTON = "xpath=//button[@title='Help']";
+    public static final String XPATH_HELP_PAGE_TITLE = "xpath=//h1[contains(text(),'How to Add a User Account')]";
     public static final String XPATH_USERNAME_INPUT = "xpath=//label[text()='Username']/parent::div/following-sibling::div/input";
     public static final String XPATH_USER_ROLE_DROPDOWN_PARENT = "xpath=//label[text()='User Role']/parent::div/following-sibling::div//i";
     public static final String FM_XPATH_USER_ROLE_DROPDOWN_CHILD = "xpath=//div[@class='oxd-select-option']/span[text()='%s']";
