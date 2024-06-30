@@ -199,6 +199,16 @@ public class BasePage {
         webElement.sendKeys(keyToSend);
     }
 
+    protected void sendKeyToUploadFile(WebDriver driver, String locator, String keyToSend) {
+        WebElement webElement = getWebElement(driver, locator);
+        webElement.sendKeys(keyToSend);
+    }
+
+    protected void sendKeyToUploadFile(WebDriver driver, String locator, String keyToSend, String... values) {
+        WebElement webElement = getWebElement(driver, getDynamicLocator(locator, values));
+        webElement.sendKeys(keyToSend);
+    }
+
     protected void selectItemInDefaultDropdown(WebDriver driver, String locator, String text) {
         (new Select(getWebElement(driver, locator))).selectByVisibleText(text);
     }

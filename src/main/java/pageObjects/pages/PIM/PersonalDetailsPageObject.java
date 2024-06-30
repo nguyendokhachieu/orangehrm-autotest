@@ -97,11 +97,12 @@ public class PersonalDetailsPageObject extends PIMPageObject {
     }
 
     public void clickToUploadAvatar(String filePath) {
-        sleepInSeconds(1);
+        String originalStyle = getElementAttribute(driver, PersonalDetailsPageUI.XPATH_AVATAR_UPLOAD_INPUT, "style");
         setAttributeInDOM(driver, PersonalDetailsPageUI.XPATH_AVATAR_UPLOAD_INPUT, "style", "visibility: visible;max-width:10px;width:10px;height:10px;");
         sleepInSeconds(1);
-        sendKeyToElement(driver, PersonalDetailsPageUI.XPATH_AVATAR_UPLOAD_INPUT, filePath);
+        sendKeyToUploadFile(driver, PersonalDetailsPageUI.XPATH_AVATAR_UPLOAD_INPUT, filePath);
         sleepInSeconds(1);
+        setAttributeInDOM(driver, PersonalDetailsPageUI.XPATH_AVATAR_UPLOAD_INPUT, "style", originalStyle);
     }
 
     public boolean isAvatarUploadedBase64() {
