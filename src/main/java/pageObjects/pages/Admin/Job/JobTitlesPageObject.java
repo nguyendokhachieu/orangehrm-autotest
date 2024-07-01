@@ -1,9 +1,10 @@
-package pageObjects.pages.Admin;
+package pageObjects.pages.Admin.Job;
 
 import commons.PageGeneratorManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import pageUIs.pages.Admin.JobTitlesPageUI;
+import pageObjects.pages.Admin.common.AdminPageObject;
+import pageUIs.pages.Admin.Job.JobTitlesPageUI;
 
 import java.util.List;
 

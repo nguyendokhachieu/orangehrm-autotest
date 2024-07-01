@@ -1,4 +1,4 @@
-package pageUIs.pages.Admin;
+package pageUIs.pages.Admin.Job;
 
 public class AddJobTitlePageUI {
     public static final String XPATH_JOB_TITLE_INPUT = "xpath=//label[text()='Job Title']/parent::div/following-sibling::div/input";

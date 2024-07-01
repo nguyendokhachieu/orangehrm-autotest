@@ -1,8 +1,8 @@
-package pageObjects.pages.Admin;
+package pageObjects.pages.Admin.common;
 
 import org.openqa.selenium.WebDriver;
 import pageObjects.common.CommonPageActions;
-import pageUIs.pages.Admin.AdminPageUI;
+import pageUIs.pages.Admin.common.AdminPageUI;
 
 public class AdminPageObject extends CommonPageActions {
     private WebDriver driver;

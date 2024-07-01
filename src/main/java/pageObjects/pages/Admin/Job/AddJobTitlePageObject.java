@@ -1,8 +1,9 @@
-package pageObjects.pages.Admin;
+package pageObjects.pages.Admin.Job;
 
 import commons.PageGeneratorManager;
 import org.openqa.selenium.WebDriver;
-import pageUIs.pages.Admin.AddJobTitlePageUI;
+import pageObjects.pages.Admin.common.AdminPageObject;
+import pageUIs.pages.Admin.Job.AddJobTitlePageUI;
 
 public class AddJobTitlePageObject extends AdminPageObject {
     private WebDriver driver;

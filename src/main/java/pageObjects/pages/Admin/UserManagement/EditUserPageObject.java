@@ -1,8 +1,9 @@
-package pageObjects.pages.Admin;
+package pageObjects.pages.Admin.UserManagement;
 
 import commons.PageGeneratorManager;
 import org.openqa.selenium.WebDriver;
-import pageUIs.pages.Admin.EditUserPageUI;
+import pageObjects.pages.Admin.common.AdminPageObject;
+import pageUIs.pages.Admin.UserManagement.EditUserPageUI;
 
 public class EditUserPageObject extends AdminPageObject {
     private WebDriver driver;

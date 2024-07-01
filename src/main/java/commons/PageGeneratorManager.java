@@ -1,7 +1,11 @@
 package commons;
 
 import org.openqa.selenium.WebDriver;
-import pageObjects.pages.Admin.*;
+import pageObjects.pages.Admin.Job.AddJobTitlePageObject;
+import pageObjects.pages.Admin.Job.JobTitlesPageObject;
+import pageObjects.pages.Admin.UserManagement.EditUserPageObject;
+import pageObjects.pages.Admin.UserManagement.UserManagementPageObject;
+import pageObjects.pages.Admin.common.AdminPageObject;
 import pageObjects.pages.Dashboard.DashboardPageObject;
 import pageObjects.pages.PIM.*;
 import pageObjects.pages.authentications.LoginPageObject;

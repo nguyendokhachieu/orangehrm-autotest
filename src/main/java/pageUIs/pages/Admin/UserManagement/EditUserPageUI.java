@@ -1,4 +1,4 @@
-package pageUIs.pages.Admin;
+package pageUIs.pages.Admin.UserManagement;
 
 public class EditUserPageUI {
     public static final String XPATH_EMPLOYEE_NAME_INPUT = "xpath=//label[text()='Employee Name']/parent::div/following-sibling::div//input";

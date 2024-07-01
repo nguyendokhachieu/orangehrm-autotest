@@ -1,4 +1,4 @@
-package pageUIs.pages.Admin;
+package pageUIs.pages.Admin.Job;
 
 public class JobTitlesPageUI {
     public static final String XPATH_ADD_BUTTON = "xpath=//button[contains(string(),'Add')]";

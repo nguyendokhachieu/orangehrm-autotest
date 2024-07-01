@@ -1,4 +1,4 @@
-package pageUIs.pages.Admin;
+package pageUIs.pages.Admin.common;
 
 public class AdminPageUI {
     public static final String FM_XPATH_TOPBAR_DROPDOWN = "xpath=//li/span[contains(text(),'%s')]";

@@ -1,4 +1,4 @@
-package pageUIs.pages.Admin;
+package pageUIs.pages.Admin.UserManagement;
 
 public class UserManagementPageUI {
     public static final String XPATH_HELP_BUTTON = "xpath=//button[@title='Help']";
