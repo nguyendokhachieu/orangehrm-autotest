@@ -143,4 +143,39 @@ public class SystemUserTestCase extends BaseTest {
         Assert.assertTrue(jobTitlesPage.isJobTitleAdded(jobTitle, jobDescription));
     }
 
+    @Description("TC005 Delete one job title by checking checkbox")
+    @Test
+    public void TC005_DeleteOneJobTitleByCheckingCheckbox() {
+        String jobTitle = RandomHelper.generateRandomJobTitle();
+        String jobDescription = "job description sample 01";
+        String jobSpecFileName = "jobspec.pdf";
+        dashboardPage.clickLeftSidebarLink(driver, "Admin");
+        userManagementPage = PageGeneratorManager.getUserManagementPage(driver);
+        userManagementPage.clickTopbarDropdown("Job");
+        userManagementPage.clickNavLinkInDropdown("Job Titles");
+        jobTitlesPage = PageGeneratorManager.getJobTitlesPage(driver);
+
+        addJobTitlePage = jobTitlesPage.clickAddButton();
+        addJobTitlePage.inputToJobTitle(jobTitle);
+        addJobTitlePage.inputToJobDescription(jobDescription);
+        Assert.assertEquals(addJobTitlePage.getJobSpecificationFileStatus(), "No file chosen");
+        addJobTitlePage.uploadJobSpecificationFile(GlobalConstants.TEST_RESOURCES_UPLOAD_PATH + jobSpecFileName);
+        Assert.assertEquals(addJobTitlePage.getJobSpecificationFileStatus(), jobSpecFileName);
+        addJobTitlePage.inputToNote("job note");
+        addJobTitlePage.clickSaveButton();
+
+        Assert.assertTrue(addJobTitlePage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_SAVED));
+        jobTitlesPage = PageGeneratorManager.getJobTitlesPage(driver);
+        jobTitlesPage.waitLoadingIconInvisible(driver);
+
+        Assert.assertTrue(jobTitlesPage.isJobTitleAdded(jobTitle, jobDescription));
+
+        jobTitlesPage.checkToRowCheckboxByJobTitle(jobTitle);
+        jobTitlesPage.clickDeleteSelectedButton();
+        jobTitlesPage.clickYesDeleteButton();
+
+        Assert.assertTrue(jobTitlesPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_DELETED));
+        jobTitlesPage.waitLoadingIconInvisible(driver);
+        Assert.assertTrue(jobTitlesPage.isRowUndisplayedByJobTitle(jobTitle));
+    }
 }

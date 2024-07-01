@@ -42,4 +42,23 @@ public class JobTitlesPageObject extends AdminPageObject {
         }
         return isAdded;
     }
+
+    public void checkToRowCheckboxByJobTitle(String jobTitle) {
+        clickToElementByJS(driver, JobTitlesPageUI.FM_XPATH_ROW_CHECKBOX_BY_JOB_TITLE, jobTitle);
+    }
+
+    public void clickDeleteSelectedButton() {
+        waitForElementClickable(driver, JobTitlesPageUI.XPATH_DELETE_SELECTED_BUTTON);
+        clickToElement(driver, JobTitlesPageUI.XPATH_DELETE_SELECTED_BUTTON);
+    }
+
+    public void clickYesDeleteButton() {
+        waitForElementClickable(driver, JobTitlesPageUI.XPATH_YES_DELETE_BUTTON);
+        clickToElement(driver, JobTitlesPageUI.XPATH_YES_DELETE_BUTTON);
+    }
+
+    public boolean isRowUndisplayedByJobTitle(String jobTitle) {
+        waitForElementInvisible(driver, JobTitlesPageUI.FM_XPATH_ROW_BY_JOB_TITLE, jobTitle);
+        return isElementUndisplayed(driver, JobTitlesPageUI.FM_XPATH_ROW_BY_JOB_TITLE, jobTitle);
+    }
 }
