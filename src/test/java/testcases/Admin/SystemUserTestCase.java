@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pageObjects.pages.Admin.Job.AddJobTitlePageObject;
+import pageObjects.pages.Admin.Organization.GeneralInfomationPageObject;
 import pageObjects.pages.Admin.UserManagement.EditUserPageObject;
 import pageObjects.pages.Admin.Job.JobTitlesPageObject;
 import pageObjects.pages.Admin.UserManagement.UserManagementPageObject;
@@ -29,6 +30,7 @@ public class SystemUserTestCase extends BaseTest {
     private EditUserPageObject editUserPage;
     private JobTitlesPageObject jobTitlesPage;
     private AddJobTitlePageObject addJobTitlePage;
+    private GeneralInfomationPageObject generalInfomationPage;
 
     @BeforeClass
     public void beforeClass() {
@@ -177,5 +179,46 @@ public class SystemUserTestCase extends BaseTest {
         Assert.assertTrue(jobTitlesPage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_DELETED));
         jobTitlesPage.waitLoadingIconInvisible(driver);
         Assert.assertTrue(jobTitlesPage.isRowUndisplayedByJobTitle(jobTitle));
+    }
+
+    @Description("TC006 General Information - Verify inputs enabled/disabled states")
+    @Test
+    public void TC006_GeneralInformationInputsState() {
+        dashboardPage.clickLeftSidebarLink(driver, "Admin");
+        userManagementPage = PageGeneratorManager.getUserManagementPage(driver);
+        userManagementPage.clickTopbarDropdown("Organization");
+        userManagementPage.clickNavLinkInDropdown("General Information");
+        generalInfomationPage = PageGeneratorManager.getGeneralInfomationPage(driver);
+        generalInfomationPage.waitLoadingIconInvisible(driver);
+
+        Assert.assertFalse(generalInfomationPage.isTextInputByLabelEnabled("Organization Name"));
+        Assert.assertFalse(generalInfomationPage.isTextInputByLabelEnabled("Registration Number"));
+        Assert.assertFalse(generalInfomationPage.isTextInputByLabelEnabled("Tax ID"));
+        Assert.assertFalse(generalInfomationPage.isTextInputByLabelEnabled("Phone"));
+        Assert.assertFalse(generalInfomationPage.isTextInputByLabelEnabled("Fax"));
+        Assert.assertFalse(generalInfomationPage.isTextInputByLabelEnabled("Email"));
+        Assert.assertFalse(generalInfomationPage.isTextInputByLabelEnabled("Address Street 1"));
+        Assert.assertFalse(generalInfomationPage.isTextInputByLabelEnabled("Address Street 2"));
+        Assert.assertFalse(generalInfomationPage.isTextInputByLabelEnabled("City"));
+        Assert.assertFalse(generalInfomationPage.isTextInputByLabelEnabled("State/Province"));
+        Assert.assertFalse(generalInfomationPage.isTextInputByLabelEnabled("Zip/Postal Code"));
+        Assert.assertTrue(generalInfomationPage.isCountryDropdownDisabled());
+        Assert.assertFalse(generalInfomationPage.isNotesEnabled());
+
+        generalInfomationPage.clickEditToggle();
+
+        Assert.assertTrue(generalInfomationPage.isTextInputByLabelEnabled("Organization Name"));
+        Assert.assertTrue(generalInfomationPage.isTextInputByLabelEnabled("Registration Number"));
+        Assert.assertTrue(generalInfomationPage.isTextInputByLabelEnabled("Tax ID"));
+        Assert.assertTrue(generalInfomationPage.isTextInputByLabelEnabled("Phone"));
+        Assert.assertTrue(generalInfomationPage.isTextInputByLabelEnabled("Fax"));
+        Assert.assertTrue(generalInfomationPage.isTextInputByLabelEnabled("Email"));
+        Assert.assertTrue(generalInfomationPage.isTextInputByLabelEnabled("Address Street 1"));
+        Assert.assertTrue(generalInfomationPage.isTextInputByLabelEnabled("Address Street 2"));
+        Assert.assertTrue(generalInfomationPage.isTextInputByLabelEnabled("City"));
+        Assert.assertTrue(generalInfomationPage.isTextInputByLabelEnabled("State/Province"));
+        Assert.assertTrue(generalInfomationPage.isTextInputByLabelEnabled("Zip/Postal Code"));
+        Assert.assertTrue(generalInfomationPage.isCountryDropdownEnabled());
+        Assert.assertTrue(generalInfomationPage.isNotesEnabled());
     }
 }
