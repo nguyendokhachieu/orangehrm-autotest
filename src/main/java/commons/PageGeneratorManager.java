@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import pageObjects.pages.Admin.Job.AddJobTitlePageObject;
 import pageObjects.pages.Admin.Job.JobTitlesPageObject;
 import pageObjects.pages.Admin.Organization.GeneralInfomationPageObject;
+import pageObjects.pages.Admin.Organization.StructurePageObject;
 import pageObjects.pages.Admin.UserManagement.EditUserPageObject;
 import pageObjects.pages.Admin.UserManagement.UserManagementPageObject;
 import pageObjects.pages.Admin.common.AdminPageObject;
@@ -70,5 +71,9 @@ public class PageGeneratorManager {
 
     public static GeneralInfomationPageObject getGeneralInfomationPage(WebDriver driver) {
         return new GeneralInfomationPageObject(driver);
+    }
+
+    public static StructurePageObject getStructurePage(WebDriver driver) {
+        return new StructurePageObject(driver);
     }
 }

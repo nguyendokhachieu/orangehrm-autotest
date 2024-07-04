@@ -13,6 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pageObjects.pages.Admin.Job.AddJobTitlePageObject;
 import pageObjects.pages.Admin.Organization.GeneralInfomationPageObject;
+import pageObjects.pages.Admin.Organization.StructurePageObject;
 import pageObjects.pages.Admin.UserManagement.EditUserPageObject;
 import pageObjects.pages.Admin.Job.JobTitlesPageObject;
 import pageObjects.pages.Admin.UserManagement.UserManagementPageObject;
@@ -31,6 +32,7 @@ public class SystemUserTestCase extends BaseTest {
     private JobTitlesPageObject jobTitlesPage;
     private AddJobTitlePageObject addJobTitlePage;
     private GeneralInfomationPageObject generalInfomationPage;
+    private StructurePageObject structurePage;
 
     @BeforeClass
     public void beforeClass() {
@@ -220,5 +222,44 @@ public class SystemUserTestCase extends BaseTest {
         Assert.assertTrue(generalInfomationPage.isTextInputByLabelEnabled("Zip/Postal Code"));
         Assert.assertTrue(generalInfomationPage.isCountryDropdownEnabled());
         Assert.assertTrue(generalInfomationPage.isNotesEnabled());
+    }
+
+    @Description("TC007 Structure - Create one new sub unit")
+    @Test
+    public void TC007_Structure() {
+        dashboardPage.clickLeftSidebarLink(driver, "Admin");
+        userManagementPage = PageGeneratorManager.getUserManagementPage(driver);
+        userManagementPage.clickTopbarDropdown("Organization");
+        userManagementPage.clickNavLinkInDropdown("Structure");
+        structurePage = PageGeneratorManager.getStructurePage(driver);
+        structurePage.waitLoadingIconInvisible(driver);
+
+        structurePage.clickEditToggle();
+
+        // Add level 1
+        structurePage.clickAddButton();
+        structurePage.inputToLabeledField("Unit Id", "91001");
+        structurePage.inputToLabeledField("Name", "Org1001");
+        structurePage.inputToDescription("Org1001 description");
+        structurePage.clickSaveButton();
+
+        Assert.assertTrue(structurePage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_SAVED));
+        structurePage.waitAddOrganizationDialogUndisplayed();
+        structurePage.waitLoadingIconInvisible(driver);
+        Assert.assertTrue(structurePage.isOrgNameDisplayed("91001", "Org1001"));
+
+        // Add Level 2 (Child of Level 1)
+        structurePage.clickPlusButton("91001", "Org1001");
+        structurePage.inputToLabeledField("Unit Id", "91002");
+        structurePage.inputToLabeledField("Name", "Org1002");
+        structurePage.inputToDescription("Org1002 description");
+        structurePage.clickSaveButton();
+
+        Assert.assertTrue(structurePage.waitToastMessageVisible(driver, ToastMessages.SUCCESSFULLY_SAVED));
+        structurePage.waitAddOrganizationDialogUndisplayed();
+        structurePage.waitLoadingIconInvisible(driver);
+        Assert.assertTrue(structurePage.isOrgNameUndisplayed("91002", "Org1002"));
+        structurePage.clickToggleButtonByOrgName("91001", "Org1001");
+        Assert.assertTrue(structurePage.isOrgNameDisplayed("91002", "Org1002"));
     }
 }
