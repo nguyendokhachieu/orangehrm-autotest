@@ -1,6 +1,7 @@
 package pageUIs.pages.PIM;
 
 public class AddEmployeePageUI {
+    public static final String XPATH_FORM_LOADER = "xpath=//div[@class='oxd-form-loader']";
     public static final String XPATH_FIRSTNAME_INPUT = "xpath=//input[@name='firstName']";
     public static final String XPATH_MIDDLENAME_INPUT = "xpath=//input[@name='middleName']";
     public static final String XPATH_LASTNAME_INPUT = "xpath=//input[@name='lastName']";

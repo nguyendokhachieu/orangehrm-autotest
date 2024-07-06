@@ -1,5 +1,6 @@
 package helpers;
 
+import commons.GlobalConstants;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,5 +29,23 @@ public class RandomHelper {
         Random random = new Random();
         Collections.shuffle(jobTitles, random);
         return jobTitles.get(0) + new Random().nextInt(1020);
+    }
+
+    public static String generateRandomFirstName() {
+        String[] firstNameArray = FileHelper.readJsonFileToArray(GlobalConstants.JAVA_RESOURCES_PATH, "RandomFirstName.json");
+        Random random = new Random();
+        return firstNameArray[random.nextInt(firstNameArray.length)];
+    }
+
+    public static String generateRandomMiddleName() {
+        String[] middleNameArray = FileHelper.readJsonFileToArray(GlobalConstants.JAVA_RESOURCES_PATH, "RandomMiddleName.json");
+        Random random = new Random();
+        return middleNameArray[random.nextInt(middleNameArray.length)];
+    }
+
+    public static String generateRandomLastName() {
+        String[] lastNameArray = FileHelper.readJsonFileToArray(GlobalConstants.JAVA_RESOURCES_PATH, "RandomLastName.json");
+        Random random = new Random();
+        return lastNameArray[random.nextInt(lastNameArray.length)];
     }
 }

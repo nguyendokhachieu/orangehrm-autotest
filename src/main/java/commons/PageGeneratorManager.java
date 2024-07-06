@@ -9,6 +9,10 @@ import pageObjects.pages.Admin.UserManagement.EditUserPageObject;
 import pageObjects.pages.Admin.UserManagement.UserManagementPageObject;
 import pageObjects.pages.Admin.common.AdminPageObject;
 import pageObjects.pages.Dashboard.DashboardPageObject;
+import pageObjects.pages.Maintenance.AccessRecordsPageObject;
+import pageObjects.pages.Maintenance.AdministratorAccessPageObject;
+import pageObjects.pages.Maintenance.MaintenancePageObject;
+import pageObjects.pages.Maintenance.PurgeEmployeeRecordsPageObject;
 import pageObjects.pages.PIM.*;
 import pageObjects.pages.authentications.LoginPageObject;
 
@@ -75,5 +79,21 @@ public class PageGeneratorManager {
 
     public static StructurePageObject getStructurePage(WebDriver driver) {
         return new StructurePageObject(driver);
+    }
+
+    public static MaintenancePageObject getMaintenancePage(WebDriver driver) {
+        return new MaintenancePageObject(driver);
+    }
+
+    public static AdministratorAccessPageObject getAdministratorAccessPage(WebDriver driver) {
+        return new AdministratorAccessPageObject(driver);
+    }
+
+    public static PurgeEmployeeRecordsPageObject getPurgeEmployeeRecordsPage(WebDriver driver) {
+        return new PurgeEmployeeRecordsPageObject(driver);
+    }
+
+    public static AccessRecordsPageObject getAccessRecordsPage(WebDriver driver) {
+        return new AccessRecordsPageObject(driver);
     }
 }

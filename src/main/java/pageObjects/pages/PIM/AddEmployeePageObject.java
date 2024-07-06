@@ -12,6 +12,11 @@ public class AddEmployeePageObject extends PIMPageObject {
         this.driver = driver;
     }
 
+    // For Firefox browser
+    public void waitFormLoaderInvisible() {
+        waitForListElementsInvisible(driver, AddEmployeePageUI.XPATH_FORM_LOADER);
+    }
+
     public void inputNewEmployeeWithFullInfo(String firstName, String middleName, String lastName, String username, String password) {
         inputToFirstName(firstName);
         inputToMiddleName(middleName);
@@ -24,17 +29,17 @@ public class AddEmployeePageObject extends PIMPageObject {
         inputToConfirmPassword(password);
     }
 
-    private void inputToFirstName(String firstName) {
+    public void inputToFirstName(String firstName) {
         waitForElementVisible(driver, AddEmployeePageUI.XPATH_FIRSTNAME_INPUT);
         sendKeyToElement(driver, AddEmployeePageUI.XPATH_FIRSTNAME_INPUT, firstName);
     }
 
-    private void inputToMiddleName(String middleName) {
+    public void inputToMiddleName(String middleName) {
         waitForElementVisible(driver, AddEmployeePageUI.XPATH_MIDDLENAME_INPUT);
         sendKeyToElement(driver, AddEmployeePageUI.XPATH_MIDDLENAME_INPUT, middleName);
     }
 
-    private void inputToLastName(String lastName) {
+    public void inputToLastName(String lastName) {
         waitForElementVisible(driver, AddEmployeePageUI.XPATH_LASTNAME_INPUT);
         sendKeyToElement(driver, AddEmployeePageUI.XPATH_LASTNAME_INPUT, lastName);
     }
